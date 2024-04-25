@@ -49,7 +49,12 @@ func (s *Store) Reserve(applicantID, _ string, ip net.IP, _ string) (bool, error
 
 	// return false if the ip has been allocated
 	if ipPool.Status.Allocated != nil {
-		if _, ok := ipPool.Status.Allocated[ipStr]; ok {
+		if appID, ok := ipPool.Status.Allocated[ipStr]; ok {
+			// already allocated by this applicantID
+			if appID == applicantID {
+				return true, nil
+			}
+			// TBD, log warning
 			return false, nil
 		}
 	}
@@ -90,8 +95,13 @@ func (s *Store) Release(ip net.IP) error {
 		return nil
 	}
 
-	ipPoolCopy := ipPool.DeepCopy()
 	ipStr := ip.String()
+	// if not in allocated list
+	if _, ok := ipPool.Status.Allocated[ipStr]; !ok {
+		return nil
+	}
+
+	ipPoolCopy := ipPool.DeepCopy()
 
 	if ipPool.Status.AllocatedHistory == nil {
 		ipPoolCopy.Status.AllocatedHistory = make(map[string]string)
@@ -128,6 +138,11 @@ func (s *Store) ReleaseByID(applicantID, _ string) error {
 			delete(ipPoolCopy.Status.Allocated, ip)
 			ipPoolCopy.Status.Available++
 		}
+	}
+
+	// no real release
+	if ipPoolCopy.Status.Available == ipPool.Status.Available {
+		return nil
 	}
 
 	_, err = s.iPPoolClient.Update(ipPoolCopy)

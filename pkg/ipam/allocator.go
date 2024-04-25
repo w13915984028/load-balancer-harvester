@@ -199,6 +199,7 @@ func (a *Allocator) Get(id string) (*current.IPConfig, error) {
 	if pool.Status.AllocatedHistory != nil {
 		for k, v := range pool.Status.AllocatedHistory {
 			if id == v {
+				// TBD: can net.ParseIP(k) always work? history should only be an reference
 				return a.IPAllocator.Get(id, "", net.ParseIP(k))
 			}
 		}
