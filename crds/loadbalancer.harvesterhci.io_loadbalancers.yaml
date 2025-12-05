@@ -232,6 +232,8 @@ spec:
                   - protocol
                   type: object
                 type: array
+              network:
+                type: string
               workloadType:
                 enum:
                 - vm

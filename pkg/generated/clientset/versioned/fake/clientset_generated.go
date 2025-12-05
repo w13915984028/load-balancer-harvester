@@ -106,12 +106,12 @@ func (c *Clientset) KubevirtV1() kubevirtv1.KubevirtV1Interface {
 	return &fakekubevirtv1.FakeKubevirtV1{Fake: &c.Fake}
 }
 
-// LoadbalancerV1beta1 retrieves the LoadbalancerV1beta1Client
-func (c *Clientset) LoadbalancerV1beta1() loadbalancerv1beta1.LoadbalancerV1beta1Interface {
-	return &fakeloadbalancerv1beta1.FakeLoadbalancerV1beta1{Fake: &c.Fake}
-}
-
 // LoadbalancerV1alpha1 retrieves the LoadbalancerV1alpha1Client
 func (c *Clientset) LoadbalancerV1alpha1() loadbalancerv1alpha1.LoadbalancerV1alpha1Interface {
 	return &fakeloadbalancerv1alpha1.FakeLoadbalancerV1alpha1{Fake: &c.Fake}
+}
+
+// LoadbalancerV1beta1 retrieves the LoadbalancerV1beta1Client
+func (c *Clientset) LoadbalancerV1beta1() loadbalancerv1beta1.LoadbalancerV1beta1Interface {
+	return &fakeloadbalancerv1beta1.FakeLoadbalancerV1beta1{Fake: &c.Fake}
 }

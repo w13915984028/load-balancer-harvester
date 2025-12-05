@@ -40,10 +40,10 @@ func New(controllerFactory controller.SharedControllerFactory) Interface {
 	}
 }
 
-func (g *group) V1alpha1() v1alpha1.Interface {
-	return v1alpha1.New(g.controllerFactory)
-}
-
 func (g *group) V1beta1() v1beta1.Interface {
 	return v1beta1.New(g.controllerFactory)
+}
+
+func (g *group) V1alpha1() v1alpha1.Interface {
+	return v1alpha1.New(g.controllerFactory)
 }
