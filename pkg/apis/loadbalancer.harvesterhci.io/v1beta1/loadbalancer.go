@@ -29,6 +29,8 @@ type LoadBalancerSpec struct {
 	// +optional
 	WorkloadType WorkloadType `json:"workloadType,omitempty"`
 	// +optional
+	Network string `json:"network,omitempty"` // for non-mgmt network LB, this field must be specified
+	// +optional
 	IPAM IPAM `json:"ipam,omitempty"`
 	// +optional
 	IPPool    string     `json:"ipPool,omitempty"`
