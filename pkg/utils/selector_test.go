@@ -6,8 +6,8 @@ import (
 	"k8s.io/apimachinery/pkg/labels"
 )
 
-func Test_NewGuestClusterCreatorSelecotr(t *testing.T) {
-	selector := NewGuestClusterCreatorSelecotr()
+func TestNewGuestClusterCreatorSelector(t *testing.T) {
+	selector := NewGuestClusterCreatorSelector()
 
 	tests := []struct {
 		name   string
@@ -39,9 +39,9 @@ func Test_NewGuestClusterCreatorSelecotr(t *testing.T) {
 	}
 }
 
-func Test_NewGuestClusterNameSelecotr(t *testing.T) {
+func TestNewGuestClusterNameSelector(t *testing.T) {
 	clusterName := "test-cluster"
-	selector := NewGuestClusterNameSelecotr(clusterName)
+	selector := NewGuestClusterNameSelector(clusterName)
 
 	tests := []struct {
 		name   string
@@ -73,9 +73,9 @@ func Test_NewGuestClusterNameSelecotr(t *testing.T) {
 	}
 }
 
-func Test_NewGuestClusterNameAndCreatorNameSelecotr(t *testing.T) {
+func TestNewGuestClusterNameAndCreatorNameSelector(t *testing.T) {
 	clusterName := "production-cluster"
-	selector := NewGuestClusterNameAndCreatorNameSelecotr(clusterName)
+	selector := NewGuestClusterNameAndCreatorNameSelector(clusterName)
 
 	tests := []struct {
 		name   string

@@ -50,7 +50,7 @@ const (
 	// on second priority
 	AnnotationKeyGuestClusterManagementNetworkOnLB = HarvesterCloudProviderPrefix + NetworkTypeManagement
 
-	// fallbackmode, the network is fetched from the guest cluster's VM's first multu-network
+	// fallback mode, the network is fetched from the guest cluster's VM's first multus network
 
 	// guest cluster used VM has such label: guestcluster.harvesterhci.io/name: gc3
 	LabelKeyGuestClusterNameOnVM = "guestcluster.harvesterhci.io/name"
