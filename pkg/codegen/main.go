@@ -27,6 +27,7 @@ func main() {
 					lbv1alpha1.LoadBalancer{},
 					lbv1beta1.LoadBalancer{},
 					lbv1beta1.IPPool{},
+					lbv1beta1.StaticIPClaim{},
 				},
 				GenerateTypes:   true,
 				GenerateClients: true,

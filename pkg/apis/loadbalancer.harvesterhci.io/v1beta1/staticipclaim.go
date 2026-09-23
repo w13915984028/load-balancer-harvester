@@ -4,8 +4,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// StaticIPClaimState represents the lifecycle phase of a StaticIPClaim.
-//
 // Lifecycle State Machine:
 //
 //	                  ┌──────────────────────┐
@@ -38,7 +36,11 @@ import (
 //   - InUse      -> Reserved  : Managed by Client/Guest upon workload detach/release.
 //   - Failed     -> Unassigned: Re-evaluated by IPPool controller if pool capacity expands or config updates.
 //
+
+// StaticIPClaimState represents the lifecycle phase of a StaticIPClaim.
+
 // +kubebuilder:validation:Enum=Unassigned;Reserved;InUse;Failed
+
 type StaticIPClaimState string
 
 const (
@@ -62,6 +64,11 @@ const (
 )
 
 // StaticIPClaim represents an admin- or user-defined static IP reservation claim.
+
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +kubebuilder:storageversion
+// +kubebuilder:resource:shortName=ipc;ipcs,scope=Namespaced
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Pool",type="string",JSONPath=".spec.poolRef.name"
@@ -69,6 +76,7 @@ const (
 // +kubebuilder:printcolumn:name="IPv6",type="string",JSONPath=".status.allocatedIPv6"
 // +kubebuilder:printcolumn:name="Identifier",type="string",JSONPath=".spec.identifier"
 // +kubebuilder:printcolumn:name="State",type="string",JSONPath=".status.state"
+
 type StaticIPClaim struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -77,21 +85,14 @@ type StaticIPClaim struct {
 	Status StaticIPClaimStatus `json:"status,omitempty"`
 }
 
-// StaticIPClaimList contains a list of StaticIPClaim.
-// +kubebuilder:object:root=true
-type StaticIPClaimList struct {
-	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []StaticIPClaim `json:"items"`
-}
-
 // StaticIPClaimSpec defines the desired state of StaticIPClaim.
+
 type StaticIPClaimSpec struct {
 	// Reference to the target IPPool. Immutable once created.
 	// The IP family strategy (IPv4, IPv6, or DualStack) is governed by the referenced pool.
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="spec.poolRef is immutable"
-	PoolRef LocalObjectReference `json:"poolRef"`
+	PoolRef string `json:"poolRef"`
 
 	// Static IPv4 address requested by user. Optional on creation.
 	// If empty and referenced pool supports IPv4, controller auto-allocates an IPv4 address.
@@ -119,6 +120,7 @@ type StaticIPClaimSpec struct {
 }
 
 // StaticIPClaimStatus defines the observed state of StaticIPClaim.
+
 type StaticIPClaimStatus struct {
 	// State represents the current lifecycle phase of the claim: Unassigned | Reserved | InUse | Failed.
 	// +optional
