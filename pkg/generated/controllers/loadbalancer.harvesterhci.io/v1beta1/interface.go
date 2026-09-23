@@ -33,6 +33,7 @@ func init() {
 type Interface interface {
 	IPPool() IPPoolController
 	LoadBalancer() LoadBalancerController
+	StaticIPClaim() StaticIPClaimController
 }
 
 func New(controllerFactory controller.SharedControllerFactory) Interface {
@@ -51,4 +52,8 @@ func (v *version) IPPool() IPPoolController {
 
 func (v *version) LoadBalancer() LoadBalancerController {
 	return generic.NewController[*v1beta1.LoadBalancer, *v1beta1.LoadBalancerList](schema.GroupVersionKind{Group: "loadbalancer.harvesterhci.io", Version: "v1beta1", Kind: "LoadBalancer"}, "loadbalancers", true, v.controllerFactory)
+}
+
+func (v *version) StaticIPClaim() StaticIPClaimController {
+	return generic.NewController[*v1beta1.StaticIPClaim, *v1beta1.StaticIPClaimList](schema.GroupVersionKind{Group: "loadbalancer.harvesterhci.io", Version: "v1beta1", Kind: "StaticIPClaim"}, "staticipclaims", true, v.controllerFactory)
 }

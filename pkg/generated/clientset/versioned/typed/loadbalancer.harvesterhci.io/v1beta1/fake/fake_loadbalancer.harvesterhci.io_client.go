@@ -36,6 +36,10 @@ func (c *FakeLoadbalancerV1beta1) LoadBalancers(namespace string) v1beta1.LoadBa
 	return newFakeLoadBalancers(c, namespace)
 }
 
+func (c *FakeLoadbalancerV1beta1) StaticIPClaims(namespace string) v1beta1.StaticIPClaimInterface {
+	return newFakeStaticIPClaims(c, namespace)
+}
+
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeLoadbalancerV1beta1) RESTClient() rest.Interface {

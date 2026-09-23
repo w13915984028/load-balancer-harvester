@@ -21,3 +21,5 @@ package v1beta1
 type IPPoolExpansion interface{}
 
 type LoadBalancerExpansion interface{}
+
+type StaticIPClaimExpansion interface{}

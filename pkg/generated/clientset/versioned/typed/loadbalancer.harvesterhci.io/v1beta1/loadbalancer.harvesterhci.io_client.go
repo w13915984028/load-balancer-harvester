@@ -30,6 +30,7 @@ type LoadbalancerV1beta1Interface interface {
 	RESTClient() rest.Interface
 	IPPoolsGetter
 	LoadBalancersGetter
+	StaticIPClaimsGetter
 }
 
 // LoadbalancerV1beta1Client is used to interact with features provided by the loadbalancer.harvesterhci.io group.
@@ -43,6 +44,10 @@ func (c *LoadbalancerV1beta1Client) IPPools() IPPoolInterface {
 
 func (c *LoadbalancerV1beta1Client) LoadBalancers(namespace string) LoadBalancerInterface {
 	return newLoadBalancers(c, namespace)
+}
+
+func (c *LoadbalancerV1beta1Client) StaticIPClaims(namespace string) StaticIPClaimInterface {
+	return newStaticIPClaims(c, namespace)
 }
 
 // NewForConfig creates a new LoadbalancerV1beta1Client for the given config.

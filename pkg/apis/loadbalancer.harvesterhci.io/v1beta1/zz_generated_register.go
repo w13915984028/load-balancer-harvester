@@ -28,8 +28,9 @@ import (
 )
 
 var (
-	IPPoolResourceName       = "ippools"
-	LoadBalancerResourceName = "loadbalancers"
+	IPPoolResourceName        = "ippools"
+	LoadBalancerResourceName  = "loadbalancers"
+	StaticIPClaimResourceName = "staticipclaims"
 )
 
 // SchemeGroupVersion is group version used to register these objects
@@ -57,6 +58,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&IPPoolList{},
 		&LoadBalancer{},
 		&LoadBalancerList{},
+		&StaticIPClaim{},
+		&StaticIPClaimList{},
 	)
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil

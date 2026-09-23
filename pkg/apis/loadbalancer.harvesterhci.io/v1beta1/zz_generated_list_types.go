@@ -57,3 +57,20 @@ func NewIPPool(namespace, name string, obj IPPool) *IPPool {
 	obj.Namespace = namespace
 	return &obj
 }
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// StaticIPClaimList is a list of StaticIPClaim resources
+type StaticIPClaimList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata"`
+
+	Items []StaticIPClaim `json:"items"`
+}
+
+func NewStaticIPClaim(namespace, name string, obj StaticIPClaim) *StaticIPClaim {
+	obj.APIVersion, obj.Kind = SchemeGroupVersion.WithKind("StaticIPClaim").ToAPIVersionAndKind()
+	obj.Name = name
+	obj.Namespace = namespace
+	return &obj
+}
